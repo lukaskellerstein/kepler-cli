@@ -1,0 +1,57 @@
+{
+  "name": "kepler-cli",
+  "version": "0.0.0",
+  "description": "Kepler CLI for simple creation of 3rd party tools",
+  "author": "Lukas Kellerstein",
+  "main": "dist/index.js",
+  "bin": {
+    "kepler-cli": "./bin/run"
+  },
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "shx rm -rf bin && shx rm -rf dist && shx rm -rf node_modules",
+    "build": "yarn && yarn clean && yarn && tsc -b",
+    "my-pack": "pkg .",
+    "my-pack-2": "oclif pack macos",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "prepack": "yarn build && oclif manifest && oclif readme",
+    "version": "oclif readme"
+  },
+  "dependencies": {
+    "@oclif/core": "^1",
+    "@oclif/plugin-help": "^5",
+    "@oclif/plugin-plugins": "^2.0.1"
+  },
+  "devDependencies": {
+    "oclif": "^2",
+    "shx": "^0.3.3",
+    "typescript": "^4.4.3",
+    "pkg": "^5.5.2"
+  },
+  "oclif": {
+    "bin": "kepler-cli",
+    "dirname": "kepler-cli",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "hello": {
+        "description": "Say hello to the world and others"
+      },
+      "create-tool-client": {
+        "description": "AAAA"
+      }
+    }
+  },
+  "pkg": {
+    "scripts": "dist/**/*.js",
+    "targets": [
+      "latest-macos-x64",
+      "latest-win-x64"
+    ],
+    "outputPath": "bin"
+  }
+}
